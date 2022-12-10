@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from leanderherzog.ch/2015/stream/ by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 04:53:07 GMT -->
+<head>
+  <title>Stream</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Stream">
+  <meta name="twitter:creator" content="@lennyjpg">
+  <meta name="twitter:url" content="https://leanderherzog.ch/2015/stream">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@lennyjpg">
+  <meta name="twitter:title" content="Stream">
+  <meta name="twitter:description" content="Stream">
+  <meta name="twitter:image" content="preview.jpg">
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      background: black;
+    }
+
+    canvas {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="visual"></div>
+  <script src="textures.min.js"></script>
+  <script>
+
+    var ImprovedNoise = function () { function c(a) { return a * a * a * (a * (6 * a - 15) + 10) } function d(a, b, c) { return b + a * (c - b) } function e(a, b, c, d) { var e = 15 & a, f = e < 8 ? b : c, g = e < 4 ? c : 12 == e || 14 == e ? b : d; return (0 == (1 & e) ? f : -f) + (0 == (2 & e) ? g : -g) } for (var a = [151, 160, 137, 91, 90, 15, 131, 13, 201, 95, 96, 53, 194, 233, 7, 225, 140, 36, 103, 30, 69, 142, 8, 99, 37, 240, 21, 10, 23, 190, 6, 148, 247, 120, 234, 75, 0, 26, 197, 62, 94, 252, 219, 203, 117, 35, 11, 32, 57, 177, 33, 88, 237, 149, 56, 87, 174, 20, 125, 136, 171, 168, 68, 175, 74, 165, 71, 134, 139, 48, 27, 166, 77, 146, 158, 231, 83, 111, 229, 122, 60, 211, 133, 230, 220, 105, 92, 41, 55, 46, 245, 40, 244, 102, 143, 54, 65, 25, 63, 161, 1, 216, 80, 73, 209, 76, 132, 187, 208, 89, 18, 169, 200, 196, 135, 130, 116, 188, 159, 86, 164, 100, 109, 198, 173, 186, 3, 64, 52, 217, 226, 250, 124, 123, 5, 202, 38, 147, 118, 126, 255, 82, 85, 212, 207, 206, 59, 227, 47, 16, 58, 17, 182, 189, 28, 42, 223, 183, 170, 213, 119, 248, 152, 2, 44, 154, 163, 70, 221, 153, 101, 155, 167, 43, 172, 9, 129, 22, 39, 253, 19, 98, 108, 110, 79, 113, 224, 232, 178, 185, 112, 104, 218, 246, 97, 228, 251, 34, 242, 193, 238, 210, 144, 12, 191, 179, 162, 241, 81, 51, 145, 235, 249, 14, 239, 107, 49, 192, 214, 31, 181, 199, 106, 157, 184, 84, 204, 176, 115, 121, 50, 45, 127, 4, 150, 254, 138, 236, 205, 93, 222, 114, 67, 29, 24, 72, 243, 141, 128, 195, 78, 66, 215, 61, 156, 180], b = 0; b < 256; b++)a[256 + b] = a[b]; return { noise: function (b, f, g) { var h = ~~b, i = ~~f, j = ~~g, k = 255 & h, l = 255 & i, m = 255 & j; b -= h, f -= i, g -= j; var n = b - 1, o = f - 1, p = g - 1, q = c(b), r = c(f), s = c(g), t = a[k] + l, u = a[t] + m, v = a[t + 1] + m, w = a[k + 1] + l, x = a[w] + m, y = a[w + 1] + m; return d(s, d(r, d(q, e(a[u], b, f, g), e(a[x], n, f, g)), d(q, e(a[v], b, o, g), e(a[y], n, o, g))), d(r, d(q, e(a[u + 1], b, f, p), e(a[x + 1], n, f, g - 1)), d(q, e(a[v + 1], b, o, p), e(a[y + 1], n, o, p)))) } } };
+    window.PRNG = (function () {
+      function PRNG() {
+
+      }
+      PRNG.prototype.pick = function (array) { return array[Math.round(Math.random() * (array.length - 1))]; };
+      PRNG.prototype.shuffle = function (a) {
+        var i, j, t;
+        i = a.length;
+        while (--i > 0) {
+          j = ~~(Math.random() * (i + 1));
+          t = a[j];
+          a[j] = a[i];
+          a[i] = t;
+        }
+        return a;
+      };
+      PRNG.prototype.maybe = function () { return Math.random > 0.5; };
+      PRNG.prototype.random = function () { return Math.random(); };
+      PRNG.prototype.lerp = function (value1, value2, amt) { return (valule2 - value1) * amt + value1; };
+      PRNG.prototype.map = function (value, low1, high1, low2, high2) { return low2 + (high2 - low2) * (value - low1) / (high1 - low1); };
+      PRNG.prototype.ri = function (max) { return Math.round(Math.random() * max); };
+      PRNG.prototype.r = function (min, max) { return min + Math.random() * (max - min); };
+      return PRNG;
+    })();
+    var m = new PRNG();
+
+  </script>
+  <script src="d3.min.js"></script>
+  <script src="main.js"></script>
+  </script>
+</body>
+
+
+<!-- Mirrored from leanderherzog.ch/2015/stream/ by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 04:53:09 GMT -->
+</html>
